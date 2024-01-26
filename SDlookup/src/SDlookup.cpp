@@ -6,6 +6,10 @@
 int indey = 0;
 File myFile;
 
+float mapfloat(float x, float in_min, float in_max, float out_min, float out_max){
+  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
 float tempToU(float tempr, float *Rarr, float *Tarr){
   int minTemp = *(Tarr +1);
   int maxTemp = *(Rarr +1);
@@ -28,9 +32,6 @@ float tempToU(float tempr, float *Rarr, float *Tarr){
   }
 }
 
-float mapfloat(float x, float in_min, float in_max, float out_min, float out_max){
-  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-}
 
 bool initSD(uint8_t MOSI, uint8_t MISO, uint8_t SCK, uint8_t CS){
   SPI.begin(SCK, MISO, MOSI, CS);
@@ -38,6 +39,17 @@ bool initSD(uint8_t MOSI, uint8_t MISO, uint8_t SCK, uint8_t CS){
     Serial.println("SD no worki");
   }
   return 0;
+}
+void processLine(String line, float *ptR, float *ptT) {
+  int commaIndex = line.indexOf(';');
+
+  if (commaIndex != -1) {
+    String firstValue = line.substring(0, commaIndex);
+    String secondValue = line.substring(commaIndex + 1);
+    *(ptT+indey) = firstValue.toFloat();
+    *(ptR+indey) = secondValue.toFloat();
+    indey++;
+ }
 }
 
 bool readSDarray(float *arrayT, float *arrayR, String filename){
@@ -71,14 +83,3 @@ bool readSDarray(float *arrayT, float *arrayR, String filename){
   return 1;
 }
 
-void processLine(String line, float *ptR, float *ptT) {
-  int commaIndex = line.indexOf(';');
-
-  if (commaIndex != -1) {
-    String firstValue = line.substring(0, commaIndex);
-    String secondValue = line.substring(commaIndex + 1);
-    *(ptT+indey) = firstValue.toFloat();
-    *(ptR+indey) = secondValue.toFloat();
-    indey++;
- }
-}
