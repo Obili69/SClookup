@@ -4,7 +4,7 @@
 
 #define maxReading 400 // Maximum number of readings
 int indey = 0;
-File myFile;
+File csvFile;
 
 float mapfloat(float x, float in_min, float in_max, float out_min, float out_max){
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
@@ -54,12 +54,12 @@ void processLine(String line, float *ptR, float *ptT) {
 
 bool readSDarray(float *arrayT, float *arrayR, String filename){
   
-  myFile = SD.open(filename); // Update with your file name
-  if (myFile) {
+  csvFile = SD.open(filename); // Update with your file name
+  if (csvFile) {
     Serial.println(filename);
     String line = "";
-    while (myFile.available() && indey < maxReading) {
-      char ch = myFile.read();
+    while (csvFile.available() && indey < maxReading) {
+      char ch = csvFile.read();
       if (ch == '\n' || ch == '\r') {
         if (line.length() > 0) {
           processLine(line, arrayR, arrayT);
@@ -74,7 +74,7 @@ bool readSDarray(float *arrayT, float *arrayR, String filename){
     if (line.length() > 0) {
       processLine(line, &arrayR[0], &arrayT[0]);
     }
-    myFile.close();
+    csvFile.close();
   }
   else {
     Serial.printf("error opening %s", filename);
