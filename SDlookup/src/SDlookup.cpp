@@ -54,7 +54,7 @@ void processLine(String line, float *ptR, float *ptT) {
 }
 
 bool readSDarray(float *arrayT, float *arrayR, String filename){
-  
+  indey = 0;
   csvFile = SD.open(filename); // Update with your file name
   if (csvFile) {
     Serial.println(filename);
@@ -75,6 +75,7 @@ bool readSDarray(float *arrayT, float *arrayR, String filename){
     if (line.length() > 0) {
       processLine(line, &arrayR[0], &arrayT[0]);
     }
+    Serial.printf("succsesfully loaded %s \n",filename);
     csvFile.close();
   }
   else {
