@@ -2,7 +2,6 @@
 #define SDlookup_h
 
 #include "Arduino.h"
-#include <Wire.h>
 #include <SD.h>
 #include <SPI.h>
 
