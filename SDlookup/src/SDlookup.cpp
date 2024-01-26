@@ -10,7 +10,7 @@ float mapfloat(float x, float in_min, float in_max, float out_min, float out_max
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
-float tempToU(float tempr, float *Rarr, float *Tarr){
+float tempToU(float tempr, float *Rarr, float *Tarr, float *dspRes, float *dspTemp){
   int minTemp = *(Tarr +1);
   int maxTemp = *(Rarr +1);
   float step = *Rarr;
@@ -24,8 +24,9 @@ float tempToU(float tempr, float *Rarr, float *Tarr){
       ind = (minTemp/step)+(tempr/step)+2;
     }
     resisstance = mapfloat(tempr,*(Tarr + ind),*(Tarr + 1 + ind),*(Rarr + ind),*(Rarr + 1 + ind));
-    
-    return  (5.0 - 5000*((5.0)/((((1000+resisstance)*251000)/((1000+resisstance)+251000)) + 5000)))/(1000+resisstance)*resisstance;
+    *dspRes = resisstance;
+    *dspTemp = (5.0 - 5000*((5.0)/((((1000+resisstance)*251000)/((1000+resisstance)+251000)) + 5000)))/(1000+resisstance)*resisstance;
+    return 1;
   }
   else{
     return 0;
