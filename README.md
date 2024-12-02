@@ -11,8 +11,9 @@ SDlookup is an Arduino/ESP32 library for temperature sensor simulation using res
 
 ## Installation
 
-1. Download the library files
-2. Place them in your Arduino libraries folder
+1.1 Download the library files
+2.1 Place them in your Arduino libraries folder
+1.2 Include as libdep in platformio.ini
 3. Include the library in your sketch:
 ```cpp
 #include "SDlookup.h"
