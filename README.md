@@ -225,4 +225,4 @@ This library is released under the MIT License.
 - 1.0.0: Initial release
 
 ## Author
-[Your Name/Organization]
+Christian Obrecht
